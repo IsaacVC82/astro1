@@ -1,11 +1,10 @@
 module.exports = {
   content: [
-    "./src/**/*.{html,js,astro}",
+    './src/**/*.{astro,html,js,jsx,ts,tsx}',
+    './public/**/*.{html,js}', 
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-};
-
-  
+}
