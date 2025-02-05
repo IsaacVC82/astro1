@@ -12,3 +12,7 @@ o con Yarn:
 yarn install
 3 - Configurar las variables de entorno si es necesario
 
+BUENAS PRACTICAS: 
+Usar componentes reutilizables para evitar redundancia. 
+Mantener las rutas organizadas en la carpeta pages/ .
+Aplicar lazy loading en imagenes y scripts para mejorar rendimiento. 
