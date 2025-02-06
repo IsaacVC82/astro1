@@ -1,40 +1,48 @@
-function validarFormulario(e) {
-  e.preventDefault();  // Prevenir el comportamiento por defecto del formulario
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+  validarFormulario(event);
+});
 
+function validarFormulario(event) {
   const nombre = document.getElementById("nombre");
   const email = document.getElementById("email");
-  const telefono = document.getElementById("celular");
   const mensaje = document.getElementById("mensaje");
+  const celular = document.getElementById("celular");
+
+  const nombreTrimmed = nombre.value.trim();
   let valido = true;
 
-  // Validación del nombre
-  if (nombre.value.trim().length < 3) {
+  // Validación del nombre (mínimo 3 caracteres)
+  if (nombreTrimmed.length < 3|| nombreTrimmed > 128) {
     alert("El nombre debe tener al menos 3 caracteres.");
     valido = false;
   }
 
-  // Validación del correo
-  if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email.value)) {
-    alert("Correo electrónico inválido.");
+  // Validación de solo letras y espacios
+  if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombreTrimmed)) {
+    alert("El nombre solo debe contener letras y espacios, sin números ni símbolos.");
     valido = false;
   }
 
-  // Validación del teléfono
-  if (!/^\d{10}$/.test(telefono.value)) {
-    alert("El teléfono debe tener 10 dígitos.");
+  // Validación del correo electrónico
+  const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!regexEmail.test(email.value)&& email.value.length <128 || email.value.length > 10) {
+    alert("Por favor, ingresa un correo electrónico válido.");
     valido = false;
   }
 
-  // Validación del mensaje
-  if (mensaje.value.trim().length < 10) {
-    alert("El mensaje debe tener al menos 10 caracteres.");
+  // Validación del celular (solo números y 12 caracteres)
+  const regexCelular = /^[0-9]{12}$/;
+  if (!regexCelular.test(celular.value)) {
+    alert("El celular debe contener exactamente 12 números.");
     valido = false;
   }
 
-  // Si la validación es exitosa, redirige a la página de gracias
-  if (valido) {
-    window.location.href = '/gracias/'; 
+  // Si hay errores, detener el envío del formulario
+  if (!valido) {
+    event.preventDefault();
+    return;
   }
+
+  window.location.href = "gracias/index.html";
 }
 
-document.getElementById('contact-form').addEventListener('submit', validarFormulario);

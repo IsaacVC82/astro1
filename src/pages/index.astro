@@ -4,9 +4,8 @@ import Layout from '../layouts/Layout.astro';
 import '../styles/globals.css';
 
 title: "Página de Contacto"
-
 ---
-<link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+
 <Layout>
   <header class="bg-blue-600 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
@@ -18,24 +17,35 @@ title: "Página de Contacto"
       </nav>
     </div>
   </header>
-
+   <!-- Formulario  -->
   <section id="formulario" class="container mx-auto py-8">
     <h2 class="text-2xl font-semibold mb-6 text-center">Formulario de Contacto</h2>
-    <form id="contact-form" action="/astro1/gracias/" method="get" class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
-      <div class="mb-4">
+    <form id="contact-form" action="gracias/index.html" method="get" class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
+            <div class="mb-4">
         <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-        <input type="text" id="nombre" name="nombre" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required minlength="3" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$" title="El nombre solo debe contener letras y espacios" />
+        <input type="text" id="nombre" name="nombre" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+          required minlength="3" maxlength="128"
+          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$"
+          title="El nombre solo debe contener letras y espacios" />
       </div>
       <div class="mb-4">
         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" id="email" name="email" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required />
-      </div><div class="mb-4">
+        <input type="email" id="email" name="email" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+        minlength="10" maxlength="128" title="Por favor, ingresa un correo electrónico válido" />
+
+      </div>
+      <div class="mb-4">
         <label for="celular" class="block text-sm font-medium text-gray-700">Celular</label>
-        <input type="text" id="celular" name="celular" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required  title="Debe ingresar un número de teléfono de 10 dígitos"/>
+        <input type="text" id="celular" name="celular" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+          required pattern="^[0-9]{12}$" maxlength="12"
+          title="El celular debe contener exactamente 12 dígitos numéricos" />
       </div>
-      <div> <label for="mensaje">Mensaje:</label>
-        <textarea id="mensaje" name="mensaje" rows="4" cols="50" placeholder="Escribe tu mensaje aquí..." required minlength="10"></textarea>
+      <div class="mb-4">
+        <label for="mensaje" class="block text-sm font-medium text-gray-700">Mensaje (opcional)</label>
+        <textarea id="mensaje" name="mensaje" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+          maxlength="500" rows="4"></textarea>
       </div>
+
       <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">Enviar</button>
     </form>
   </section>
@@ -46,6 +56,6 @@ title: "Página de Contacto"
     </div>
   </footer>
 
-
-  <script is:inline src={`${import.meta.env.BASE_URL}scripts/validacion.js`} type="module"></script>
+  <script is:inline src="/astro1//scripts/validacion.js" type="module"></script>
 </Layout>
+
