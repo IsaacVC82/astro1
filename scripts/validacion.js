@@ -46,3 +46,5 @@ function validarFormulario(event) {
   window.location.href = "gracias/index.html";
 }
 
+
+
