@@ -25,11 +25,6 @@ function validarFormulario(e) {
     valido = false;
   }
 
-  // Validación del mensaje
-  if (mensaje.value.trim().length < 10) {
-    alert("El mensaje debe tener al menos 10 caracteres.");
-    valido = false;
-  }
 
   // Si la validación es exitosa, redirige a la página de gracias
   if (valido) {
