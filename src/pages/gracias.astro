@@ -1,20 +1,43 @@
 ---
-import Layout from '../layouts/Layout.astro';
-title: "Gracias por el contacto"
+import Layout from '../src/layouts/Layout.astro';
 import '../styles/globals.css';
----
 
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gracias por el contacto</title>
-  </head>
-  <body class="bg-blue-50 text-center p-12">
-    <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
-      <h1 class="text-3xl font-semibold text-blue-600 mb-4">¡Gracias por ponerte en contacto!</h1>
-      <p class="text-lg text-gray-700">Hemos recibido tu mensaje. Nos pondremos en contacto contigo pronto.</p>
-      <a href="/astro1/" class="mt-6 inline-block bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition">Volver al formulario</a>
+title: "Gracias"
+---
+<head>
+  <link rel="stylesheet" href="./src/styles/globals.css" />
+</head>
+
+
+
+<Layout>
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="text-xl font-bold">Mi Presentación</div>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><a href="./" class="hover:underline">Contacto</a></li>        </ul>
+      </nav>
     </div>
-  </body>
-</html>
+    
+  </header>
+
+  <!-- Mensaje de agradecimiento -->
+  <section class="container mx-auto py-16 text-center">
+    <h2 class="text-3xl font-semibold text-blue-600">¡Gracias por tu mensaje!</h2>
+    <p class="mt-4 text-lg text-gray-700">
+      Hemos recibido tu información y te responderemos lo antes posible.
+    </p>
+    <p class="mt-2 text-gray-500">Si necesitas algo más, no dudes en contactarnos nuevamente.</p>
+
+    <a href="/" class="mt-6 inline-block bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition">
+      Volver al formulario
+    </a>
+  </section>
+
+  <footer class="bg-blue-500 text-white py-4 mt-12">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2025 Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</Layout>
