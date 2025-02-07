@@ -1,34 +1,36 @@
 function validarFormulario(e) {
-  e.preventDefault();  // Prevenir el comportamiento por defecto del formulario
+  e.preventDefault(); // Prevenir el envío del formulario
 
   const nombre = document.getElementById("nombre");
   const email = document.getElementById("email");
   const telefono = document.getElementById("celular");
-  const mensaje = document.getElementById("mensaje");
+  const mensaje = document.getElementById("mensaje"); 
   let valido = true;
 
-  // Validación del nombre
-  if (nombre.value.trim().length < 3) {
-    alert("El nombre debe tener al menos 3 caracteres.");
+  // Validación del nombre (entre 9 y 128 caracteres)
+  const nombreLength = nombre.value.trim().length;
+  if (nombreLength < 9 || nombreLength > 128) {
+    alert("El nombre debe tener entre 9 y 128 caracteres.");
     valido = false;
   }
 
-  // Validación del correo
-  if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email.value)) {
-    alert("Correo electrónico inválido.");
+  // Validación del correo (entre 9 y 128 caracteres y formato válido)
+  const emailLength = email.value.length;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (emailLength < 9 || emailLength > 128 || !emailRegex.test(email.value)) {
+    alert("El correo electrónico debe ser válido y tener entre 9 y 128 caracteres.");
     valido = false;
   }
 
-  // Validación del teléfono
-  if (!/^\d{10}$/.test(telefono.value)) {
-    alert("El teléfono debe tener 10 dígitos.");
+  // Validación del teléfono (exactamente 12 dígitos numéricos)
+  if (!/^\d{12}$/.test(telefono.value)) {
+    alert("El teléfono debe tener exactamente 12 dígitos numéricos.");
     valido = false;
   }
 
-
-  // Si la validación es exitosa, redirige a la página de gracias
+  // Si todo es válido, redirigir a la página de agradecimiento
   if (valido) {
-    window.location.href = '/gracias/'; 
+    window.location.href = '/gracias/index.html';
   }
 }
 
