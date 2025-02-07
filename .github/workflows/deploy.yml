@@ -1,0 +1,40 @@
+name: Deploy Astro to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Se ejecuta cuando se suben cambios a main
+  workflow_dispatch: # Permite ejecución manual si es necesario
+
+permissions:
+  contents: read  # Se requiere para clonar el repo
+  pages: write    # Permite escribir en GitHub Pages
+  id-token: write # Permite autenticación en GitHub Actions
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛠️ Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: 🔧 Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Usa la versión que necesites
+          cache: npm
+
+      - name: 📦 Instalar dependencias
+        run: npm install
+
+      - name: ⚙️ Construir Astro
+        run: npm run build
+
+      - name: 🚀 Subir archivos a GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages   # Publicar en la rama gh-pages
+          folder: dist       # Carpeta con los archivos a desplegar
+
+
