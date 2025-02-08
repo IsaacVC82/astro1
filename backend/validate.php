@@ -1,4 +1,17 @@
 <?php
+// Habilitar CORS para permitir peticiones desde el frontend
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Manejar preflight (cuando el navegador envía una solicitud OPTIONS antes de POST o GET)
+if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+    http_response_code(200);
+    exit;
+}
+?>
+
+<?php
 header("Content-Type: application/json");
 
 // Verificar si la solicitud es POST
@@ -7,10 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
+
 // Obtener los datos del formulario
-$nombre = trim($_POST["nombre"] ?? "");
-$email = trim($_POST["email"] ?? "");
-$telefono = trim($_POST["celular"] ?? "");
+$nombre = htmlspecialchars(trim($_POST["nombre"] ?? ""), ENT_QUOTES, 'UTF-8');
+$email = htmlspecialchars(trim($_POST["email"] ?? ""), ENT_QUOTES, 'UTF-8');
+$telefono = htmlspecialchars(trim($_POST["celular"] ?? ""), ENT_QUOTES, 'UTF-8');
 
 // Validaciones
 $errores = [];
@@ -40,3 +54,4 @@ if (!empty($errores)) {
 echo json_encode(["status" => "success"]);
 exit;
 ?>
+

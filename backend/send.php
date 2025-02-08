@@ -1,4 +1,16 @@
 <?php
+// Habilitar CORS para permitir peticiones desde el frontend
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Manejar preflight 
+if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+    http_response_code(200);
+    exit;
+}
+?>
+<?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
@@ -9,11 +21,18 @@ require '../vendor/autoload.php'; // Carga PHPMailer y phpdotenv
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST["nombre"];
-    $email = $_POST["email"];
-    $telefono = $_POST["celular"]; // Asegúrate de que el formulario tiene este campo
+if ($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "GET") {
+    // Obtener y sanitizar los datos del formulario
+    $nombre = htmlspecialchars($_POST["nombre"], ENT_QUOTES, 'UTF-8');
+    $email = htmlspecialchars($_POST["email"], ENT_QUOTES, 'UTF-8');
+    $telefono = htmlspecialchars($_POST["celular"], ENT_QUOTES, 'UTF-8'); // Asegúrate de que el formulario tiene este campo
     
+    // Validar los datos del formulario
+    if (empty($nombre) || empty($email) || empty($telefono)) {
+        echo json_encode(["status" => "error", "message" => "Faltan datos obligatorios."]);
+        exit;
+    }
+
     $mail = new PHPMailer(true);
     
     try {
@@ -45,3 +64,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo json_encode(["status" => "error", "message" => "Acceso no permitido."]);
 }
 ?>
+

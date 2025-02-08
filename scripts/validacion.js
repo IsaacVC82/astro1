@@ -60,3 +60,4 @@ async function validarFormulario(e) {
     alert("Ocurrió un error, inténtalo de nuevo.");
   }
 }
+ 
