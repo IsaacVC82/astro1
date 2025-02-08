@@ -41,7 +41,8 @@ async function validarFormulario(e) {
   const formData = new FormData(e.target);
 
   try {
-    let response = await fetch("/backend/validate.php", {
+    // Enviar datos al backend con fetch
+    let response = await fetch("/backend/send.php", {
       method: "POST",
       body: formData
     });
