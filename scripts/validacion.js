@@ -42,7 +42,7 @@ async function validarFormulario(e) {
 
   try {
     // Enviar datos al backend con fetch
-    let response = await fetch("/backend/send.php", {
+    let response = await fetch("http://localhost:8000/send.php", {
       method: "POST",
       body: formData
     });
@@ -53,11 +53,12 @@ async function validarFormulario(e) {
       alert(result.message);
     } else {
       alert(result.message);
-      window.location.href = "/gracias/index.html"; // Redirección a página de agradecimiento
+      setTimeout(() => {
+        window.location.href = "/gracias/index.html"; // Redirección a la página de agradecimiento
+      }, 100); // Retraso de 100ms
     }
   } catch (error) {
     console.error("Error al enviar el formulario:", error);
     alert("Ocurrió un error, inténtalo de nuevo.");
   }
 }
- 

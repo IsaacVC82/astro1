@@ -1,16 +1,7 @@
 ---
-import Layout from '.././layouts/Layout.astro';
+import Layout from '../layouts/Layout.astro';
 import '../styles/globals.css';
-
-title: "Página de Contacto"
 ---
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Página de Contacto</title>
-  <link rel="stylesheet" href="./src/styles/globals.css" />
-</head>
 
 <Layout>
   <header class="bg-blue-600 text-white p-4">
@@ -27,7 +18,7 @@ title: "Página de Contacto"
   <!-- Formulario  -->
   <section id="formulario" class="container mx-auto py-8">
     <h2 class="text-2xl font-semibold mb-6 text-center">Formulario de Contacto</h2>
-    <form id="contact-form" action="gracias/index.html" method="get" class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
+    <form id="contact-form" class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
       <div class="mb-4">
         <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
         <input type="text" id="nombre" name="nombre" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -51,8 +42,8 @@ title: "Página de Contacto"
          rows="4"></textarea>
       </div>
 
-      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">Enviar</button>
-    </form>
+      <button id="submit-button" type="button" class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">Enviar</button>
+
   </section>
 
   <footer id="pie" class="bg-blue-500 text-white py-4 mt-12">
@@ -61,5 +52,75 @@ title: "Página de Contacto"
     </div>
   </footer>
 
+
+
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Escuchar el clic en el botón
+      document.getElementById("submit-button").addEventListener("click", validarFormulario);
+    });
+  
+    async function validarFormulario(e) {
+      e.preventDefault(); // Prevenir el comportamiento por defecto del botón
+  
+      const nombre = document.getElementById("nombre");
+      const email = document.getElementById("email");
+      const telefono = document.getElementById("celular");
+      const mensaje = document.getElementById("mensaje");
+      let valido = true;
+      let errores = [];
+  
+      // Validación del nombre 
+      const nombreLength = nombre.value.trim().length;
+      if (nombreLength < 9 || nombreLength > 128) {
+        errores.push("El nombre debe tener entre 9 y 128 caracteres.");
+        valido = false;
+      }
+  
+      // Validación del correo 
+      const emailLength = email.value.length;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (emailLength < 9 || emailLength > 128 || !emailRegex.test(email.value)) {
+        errores.push("El correo electrónico debe ser válido y tener entre 9 y 128 caracteres.");
+        valido = false;
+      }
+  
+      // Validación del teléfono (exactamente 12 dígitos numéricos)
+      if (!/^\d{12}$/.test(telefono.value)) {
+        errores.push("El teléfono debe tener exactamente 12 dígitos numéricos.");
+        valido = false;
+      }
+  
+      if (!valido) {
+        alert(errores.join("\n"));
+        return;
+      }
+  
+      // Si es válido, enviar los datos al backend
+      const formData = new FormData(document.getElementById("contact-form"));
+  
+      try {
+        let response = await fetch("http://localhost:8000/send.php", {
+          method: "POST",
+          body: formData
+        });
+  
+        let result = await response.json();
+  
+        if (result.status === "error") {
+          alert(result.message);
+        } else {
+          alert(result.message);
+          window.location.href = "/gracias/index.html"; // Redirección a la página de agradecimiento
+        }
+      } catch (error) {
+        console.error("Error al enviar el formulario:", error);
+        alert("Ocurrió un error, inténtalo de nuevo.");
+      }
+    }
+  </script>
+  
+
   <script is:inline src="./scripts/validacion.js" type="module"></script>
 </Layout>
+
