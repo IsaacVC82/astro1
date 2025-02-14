@@ -1,38 +1,34 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 import '../styles/globals.css';
-
-title: "Página de Contacto"
 ---
 
 <Layout>
   <header class="bg-blue-600 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
-      <div class="text-xl font-bold ">Mi Presentación</div>
+      <div class="text-xl font-bold">Mi Presentación</div>
       <nav>
         <ul class="flex space-x-4">
-          <li><a href="#contacto" class="hover:underline">Contacto</a></li>
+          <li><a href="./" class="hover:underline">Contacto</a></li>
         </ul>
       </nav>
     </div>
   </header>
-   <!-- Formulario  -->
+  
+  <!-- Formulario  -->
   <section id="formulario" class="container mx-auto py-8">
     <h2 class="text-2xl font-semibold mb-6 text-center">Formulario de Contacto</h2>
-    <form id="contact-form" action="gracias/index.html" method="get" class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
-            <div class="mb-4">
+    <form id="contact-form" class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
+      <div class="mb-4">
         <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
         <input type="text" id="nombre" name="nombre" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-          required minlength="3" maxlength="128"
-          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$"
+          required minlength="3" maxlength="128" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$"
           title="El nombre solo debe contener letras y espacios" />
       </div>
       <div class="mb-4">
         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
         <input type="email" id="email" name="email" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
         minlength="10" maxlength="128" title="Por favor, ingresa un correo electrónico válido" />
-
       </div>
       <div class="mb-4">
         <label for="celular" class="block text-sm font-medium text-gray-700">Celular</label>
@@ -43,10 +39,10 @@ title: "Página de Contacto"
       <div class="mb-4">
         <label for="mensaje" class="block text-sm font-medium text-gray-700">Mensaje (opcional)</label>
         <textarea id="mensaje" name="mensaje" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-          maxlength="500" rows="4"></textarea>
+         rows="4"></textarea>
       </div>
 
-      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">Enviar</button>
+      <button id="submit-button" type="submit" class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">Enviar</button>
     </form>
   </section>
 
@@ -56,6 +52,37 @@ title: "Página de Contacto"
     </div>
   </footer>
 
-  <script is:inline src="/astro1//scripts/validacion.js" type="module"></script>
+  <script is:inline>
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+  
+      const formData = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        celular: document.getElementById('celular').value,
+      };
+  
+      try {
+        const response = await fetch('http://localhost:8000/send.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+  
+        const result = await response.json();
+  
+        if (result.status === 'success') {
+          window.location.href = '/gracias/index.html';
+        } else {
+          alert('Error al enviar el correo: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al enviar el formulario');
+      }
+    });
+  </script>
 </Layout>
 
