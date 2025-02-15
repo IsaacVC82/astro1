@@ -74,7 +74,7 @@ import '../styles/globals.css';
         const result = await response.json();
   
         if (result.status === 'success') {
-          window.location.href = '/gracias/index.html';
+          window.location.href = './gracias/index.html';
         } else {
           alert('Error al enviar el correo: ' + result.message);
         }
