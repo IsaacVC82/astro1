@@ -1,32 +1,24 @@
-<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("contact-form").addEventListener("submit", validarFormulario);
 });
 
 async function validarFormulario(e) {
   e.preventDefault(); // Prevenir el envío del formulario
-=======
 document.getElementById("contact-form").addEventListener("submit", function(event) {
   validarFormulario(event);
 });
->>>>>>> dev
 
 function validarFormulario(event) {
   const nombre = document.getElementById("nombre");
   const email = document.getElementById("email");
-<<<<<<< HEAD
   const telefono = document.getElementById("celular");
-  const mensaje = document.getElementById("mensaje"); 
-=======
   const mensaje = document.getElementById("mensaje");
   const celular = document.getElementById("celular");
 
   const nombreTrimmed = nombre.value.trim();
->>>>>>> dev
   let valido = true;
   let errores = [];
 
-<<<<<<< HEAD
   // Validación del nombre 
   const nombreLength = nombre.value.trim().length;
   if (nombreLength < 9 || nombreLength > 128) {
@@ -57,12 +49,12 @@ function validarFormulario(event) {
 
   try {
     // Enviar datos al backend con fetch
-    let response = await fetch("http://localhost:8000/send.php", {
+    let response =  fetch("http://localhost:8000/send.php", {
       method: "POST",
       body: formData
     });
 
-    let result = await response.json();
+    let result =  response.json();
 
     if (result.status === "error") {
       alert(result.message);
@@ -75,7 +67,6 @@ function validarFormulario(event) {
   } catch (error) {
     console.error("Error al enviar el formulario:", error);
     alert("Ocurrió un error, inténtalo de nuevo.");
-=======
   // Validación del nombre (mínimo 3 caracteres)
   if (nombreTrimmed.length < 3|| nombreTrimmed > 128) {
     alert("El nombre debe tener al menos 3 caracteres.");
@@ -106,12 +97,8 @@ function validarFormulario(event) {
   if (!valido) {
     event.preventDefault();
     return;
->>>>>>> dev
   }
 
   window.location.href = "gracias/index.html";
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> dev
+}};
