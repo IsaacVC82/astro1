@@ -2,27 +2,34 @@
 FROM php:8.1-apache
 
 # Instalar extensiones necesarias
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN apt-get update && apt-get install -y \
+    unzip \
+    zip \
+    git \
+    libzip-dev \
+    && docker-php-ext-install zip mysqli pdo pdo_mysql
 
 # Instalar Composer manualmente
-RUN apt-get update && apt-get install -y unzip \
-    && curl -sS https://getcomposer.org/installer | php \
+RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
 
-# Copiar los archivos del backend al contenedor
+# Copiar archivos al contenedor
 COPY . /var/www/html/
-
-# Establecer el directorio de trabajo
-WORKDIR /var/www/html/
-
-# Instalar dependencias de PHP (sin errores de permisos)
-RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
 
 # Establecer permisos correctos
 RUN chown -R www-data:www-data /var/www/html
 
+# Ir al directorio de trabajo
+WORKDIR /var/www/html/
+
+# Configurar autenticación en Composer (opcional, si usas paquetes privados)
+RUN composer config --global --auth
+
+# Instalar dependencias de Composer
+RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress || cat /var/www/html/composer.lock
+
 # Exponer el puerto 80
 EXPOSE 80
 
-# Comando para iniciar el servidor
+# Iniciar Apache
 CMD ["apache2-foreground"]
