@@ -37,4 +37,3 @@ jobs:
           branch: gh-pages
           folder: dist
   # La carpeta con los archivos generados que se subirán a GitHub Pages.
->>>>>>> dev
