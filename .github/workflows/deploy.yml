@@ -1,73 +1,40 @@
-<<<<<<< HEAD
-name: Deploy Astro to GitHub Pages
-=======
 name: Deploy to GitHub Pages
->>>>>>> dev
 
 on:
   push:
     branches:
-<<<<<<< HEAD
-      - main  # Se ejecuta cuando se suben cambios a main
-  workflow_dispatch: # Permite ejecución manual si es necesario
+      - main
+  workflow_dispatch:
 
 permissions:
-  contents: read  # Se requiere para clonar el repo
-  pages: write    # Permite escribir en GitHub Pages
-  id-token: write # Permite autenticación en GitHub Actions
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🛠️ Clonar el repositorio
+      - name: Clonar el repositorio
         uses: actions/checkout@v4
 
-      - name: 🔧 Instalar Node.js
+      - name: Instalar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20 # Usa la versión que necesites
+          node-version: 20
           cache: npm
 
-      - name: 📦 Instalar dependencias
+      - name: Instalar dependencias
         run: npm install
 
-      - name: ⚙️ Construir Astro
+      - name: Construir Astro
         run: npm run build
 
-      - name: 🚀 Subir archivos a GitHub Pages
+      - name: Subir archivos a GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages   # Publicar en la rama gh-pages
-          folder: dist       # Carpeta con los archivos a desplegar
-
-
-=======
-      - main  # Puedes cambiar esto a 'dev' si prefieres desplegar desde esa rama.
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build the project
-        run: npm run build  
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages  # Especifica la rama de destino donde se alojarán los archivos generados.
-          folder: dist  # La carpeta con los archivos generados que se subirán a GitHub Pages.
+          branch: gh-pages
+          folder: dist
+  # La carpeta con los archivos generados que se subirán a GitHub Pages.
 >>>>>>> dev
