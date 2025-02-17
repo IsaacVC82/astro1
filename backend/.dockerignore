@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 node_modules
 vendor
 *.log
 *.env
+=======
+vendor/
+node_modules/
+.env
+.DS_Store
+>>>>>>> dev

@@ -6,4 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+<<<<<<< HEAD
+=======
+    'Mailjet' => array($vendorDir . '/mailjet/mailjet-apiv3-php/src'),
+>>>>>>> dev
 );

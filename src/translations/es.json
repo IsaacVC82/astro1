@@ -1,0 +1,17 @@
+{
+  "title": "Mi Sitio",
+  "presentation": "Mi Presentación",
+  "welcome": "Bienvenido",
+  "home": "Inicio",
+  "contact": "Contacto",
+  "name": "Nombre",
+  "email": "Correo electrónico",
+  "phone": "Teléfono",
+  "message": "Mensaje",
+  "send": "Enviar",
+  "thank_you": "¡Gracias!",
+  "form_welcome": "Bienvenido a mi Presentación",
+  "form_thank_you": "Hemos recibido tu información y te responderemos lo antes posible.",
+  "form_return": "Volver al formulario",
+  "rights_reserved": "Todos los derechos reservados."
+}

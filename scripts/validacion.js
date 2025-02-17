@@ -1,17 +1,32 @@
+<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("contact-form").addEventListener("submit", validarFormulario);
 });
 
 async function validarFormulario(e) {
   e.preventDefault(); // Prevenir el envío del formulario
+=======
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+  validarFormulario(event);
+});
+>>>>>>> dev
 
+function validarFormulario(event) {
   const nombre = document.getElementById("nombre");
   const email = document.getElementById("email");
+<<<<<<< HEAD
   const telefono = document.getElementById("celular");
   const mensaje = document.getElementById("mensaje"); 
+=======
+  const mensaje = document.getElementById("mensaje");
+  const celular = document.getElementById("celular");
+
+  const nombreTrimmed = nombre.value.trim();
+>>>>>>> dev
   let valido = true;
   let errores = [];
 
+<<<<<<< HEAD
   // Validación del nombre 
   const nombreLength = nombre.value.trim().length;
   if (nombreLength < 9 || nombreLength > 128) {
@@ -60,5 +75,43 @@ async function validarFormulario(e) {
   } catch (error) {
     console.error("Error al enviar el formulario:", error);
     alert("Ocurrió un error, inténtalo de nuevo.");
+=======
+  // Validación del nombre (mínimo 3 caracteres)
+  if (nombreTrimmed.length < 3|| nombreTrimmed > 128) {
+    alert("El nombre debe tener al menos 3 caracteres.");
+    valido = false;
   }
+
+  // Validación de solo letras y espacios
+  if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombreTrimmed)) {
+    alert("El nombre solo debe contener letras y espacios, sin números ni símbolos.");
+    valido = false;
+  }
+
+  // Validación del correo electrónico
+  const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!regexEmail.test(email.value)&& email.value.length <128 || email.value.length > 10) {
+    alert("Por favor, ingresa un correo electrónico válido.");
+    valido = false;
+  }
+
+  // Validación del celular (solo números y 12 caracteres)
+  const regexCelular = /^[0-9]{12}$/;
+  if (!regexCelular.test(celular.value)) {
+    alert("El celular debe contener exactamente 12 números.");
+    valido = false;
+  }
+
+  // Si hay errores, detener el envío del formulario
+  if (!valido) {
+    event.preventDefault();
+    return;
+>>>>>>> dev
+  }
+
+  window.location.href = "gracias/index.html";
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev

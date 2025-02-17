@@ -1,0 +1,31 @@
+---
+const url = new URL(Astro.url);
+const currentLang = url.pathname.split('/')[1] || 'es'; // Obtener el idioma actual
+const newLang = currentLang === 'es' ? 'en' : 'es'; // Alternar el idioma
+
+// Asegurar que el reemplazo es correcto y evitar errores en la ruta
+const newPath = url.pathname.replace(`/${currentLang}`, '') || '/';
+const newUrl = `/${newLang}${newPath}`;
+---
+
+<button onclick={`window.location.href='${newUrl}'`} class="lang-btn">
+  {currentLang === 'es' ? 'English' : 'Español'}
+</button>
+
+<style>
+  .lang-btn {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .lang-btn:hover {
+    background-color: #2563eb;
+  }
+</style>
+
+
+
