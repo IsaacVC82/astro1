@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>My Site</title><link rel="stylesheet" href="/astro1/_astro/Formulario.Be3lRJ4B.css"></head> <body> <header class="bg-blue-600 text-white p-4"> <div class="container mx-auto flex justify-between items-center"> <div class="text-xl font-bold">My Presentation</div> <nav> <ul class="flex space-x-4"> <li><a href="/en/">Home</a></li> <li><a href="/en/Formulario">Contact</a></li> </ul> </nav> <button onclick="window.location.href='/es/en/Formulario/'" class="lang-btn" data-astro-cid-a2mxz4y6> Español </button>  </div> </header>  <section id="formulario" class="container mx-auto py-8"> <h2 class="text-2xl font-semibold mb-6 text-center">Contact</h2> <form id="contact-form" class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto"> <div class="mb-4"> <label for="nombre" class="block text-sm font-medium text-gray-700">Name</label> <input type="text" id="nombre" name="nombre" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required minlength="3" maxlength="128" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$" title="El nombre solo debe contener letras y espacios"> </div> <div class="mb-4"> <label for="email" class="block text-sm font-medium text-gray-700">Email</label> <input type="email" id="email" name="email" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$" minlength="10" maxlength="128" title="Por favor, ingresa un correo electrónico válido"> </div> <div class="mb-4"> <label for="celular" class="block text-sm font-medium text-gray-700">Phone</label> <input type="text" id="celular" name="celular" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" required pattern="^[0-9]{12}$" maxlength="12" title="El celular debe contener exactamente 12 dígitos numéricos"> </div> <div class="mb-4"> <label for="mensaje" class="block text-sm font-medium text-gray-700">Message</label> <textarea id="mensaje" name="mensaje" class="w-full mt-1 px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600" rows="4"></textarea> </div> <button id="submit-button" type="submit" class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition">Send</button> </form> </section> <script>
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+  
+      const formData = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        celular: document.getElementById('celular').value,
+      };
+  
+      try {
+        const response = await fetch('http://localhost:8000/send.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+  
+        const result = await response.json();
+  
+        if (result.status === 'success') {
+          window.location.href = './gracias/index.html';
+        } else {
+          alert('Error al enviar el correo: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al enviar el formulario');
+      }
+    });
+  </script>  <footer class="bg-blue-500 text-white py-4 mt-12"> <div class="container mx-auto text-center"> <p>&copy; 2025 My Site. All rights reserved.</p> </div> </footer> </body></html>
