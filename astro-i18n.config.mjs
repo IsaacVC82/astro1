@@ -5,4 +5,5 @@ export default {
       es: () => import("./src/translations/es.json"), 
       en: () => import("./src/translations/en.json"),
     },
+      base: "/astro1/",
   };
