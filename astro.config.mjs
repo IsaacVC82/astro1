@@ -5,5 +5,5 @@ export default defineConfig({
     defaultLocale: "es",
     locales: ["es", "en"],
   },
-  base: "/astro1/", 
+  //base: "/astro1/", 
 });
