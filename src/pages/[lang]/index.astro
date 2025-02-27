@@ -2,16 +2,16 @@
 import Layout from '../../layouts/Layout.astro';
 import { loadTranslations } from '../../translations';
 
-// Función para generar las rutas
 export async function getStaticPaths() {
-  // Definir los idiomas soportados
   const supportedLangs = ['es', 'en'];
 
   return supportedLangs.map((lang) => ({
-    params: { lang }, // Parámetro dinámico
-    props: { lang },  // Pasar el idioma como prop
+    params: { lang },  // Pasar el idioma como parámetro
+    props: { lang },    // Pasar el idioma como propiedad
   }));
 }
+
+
 
 // Obtener el idioma de los parámetros
 const { lang } = Astro.params;

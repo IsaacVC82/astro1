@@ -19,9 +19,11 @@ const { currentLang, translations } = Astro.props;
         <ul class="flex space-x-4">
           <li><a href={`/${currentLang}/`}>{translations.home}</a></li>
           <li><a href={`/${currentLang}/Formulario`}>{translations.contact}</a></li>
+          <li><a href="/blog">Blog</a></li>
         </ul>
       </nav>
       <LanguageSwitcher />
+      
     </div>
   </header>
 

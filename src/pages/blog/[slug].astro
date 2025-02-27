@@ -1,0 +1,77 @@
+---
+import '../../styles/globals.css';
+
+const { slug } = Astro.params;
+
+// Fetch dinámico para obtener el post según el slug
+let post = null;
+try {
+  const response = await fetch(`http://localhost:8000/api/posts/${slug}`);
+  if (!response.ok) {
+    throw new Error('Error al obtener el post');
+  }
+  post = await response.json();
+} catch (error) {
+  console.error('Error obteniendo el post:', error);
+}
+
+// Función para obtener todas las rutas posibles (slugs) 
+export async function getStaticPaths() {
+  try {
+    const response = await fetch('http://localhost:8000/api/posts');
+    const posts = await response.json();
+
+    return posts.map((post) => ({
+      params: { slug: post.slug },
+    }));
+  } catch (error) {
+    console.error('Error obteniendo los slugs:', error);
+    return [];
+  }
+}
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{post ? post.title : 'Post no encontrado'}</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto text-center">
+      <h1 class="text-2xl font-bold">Mi Blog</h1>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="max-w-4xl mx-auto p-6">
+    {post ? (
+      <article class="bg-white p-6 rounded shadow-lg">
+        <h1 class="text-3xl font-bold mb-4">{post.title}</h1>
+        <p class="text-gray-700">{post.content}</p>
+      </article>
+    ) : (
+      <p class="text-red-600 text-center">Post no encontrado.</p>
+    )}
+    <a class="text-blue-600 mt-6 inline-block" href="/blog">← Volver al blog</a>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white py-4 mt-12">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2025 Mi Blog. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+
+
+
+
