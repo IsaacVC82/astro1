@@ -3,10 +3,10 @@ import '../../styles/globals.css';
 
 const { slug } = Astro.params;
 
-// Fetch dinámico para obtener el post según el slug
+// Inicializa post como nulo por si hay un error
 let post = null;
 try {
-  const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/posts`);
+  const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/posts?slug=${slug}`);
   if (!response.ok) {
     throw new Error('Error al obtener el post');
   }
@@ -15,7 +15,7 @@ try {
   console.error('Error obteniendo el post:', error);
 }
 
-// Función para obtener todas las rutas posibles (slugs) 
+// Función para obtener todas las rutas posibles (slugs)
 export async function getStaticPaths() {
   try {
     const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/posts`);
@@ -70,6 +70,7 @@ export async function getStaticPaths() {
 
 </body>
 </html>
+
 
 
 

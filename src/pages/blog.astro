@@ -1,18 +1,17 @@
 ---
 import '../styles/globals.css';
 
-// Realiza el fetch para obtener los posts
+// Inicializa posts como un array vacío
+let posts = [];
 try {
   const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/posts`);
   if (!response.ok) {
     throw new Error('Error al obtener los posts');
   }
-  const posts = await response.json();
-  console.log('Posts obtenidos:', posts);
+  posts = await response.json();
 } catch (error) {
   console.error('Error durante el fetch:', error);
 }
-
 
 // Filtra solo los posts que tienen un slug válido
 const validPosts = posts.filter(post => post.slug && post.slug.trim() !== '');
@@ -54,3 +53,4 @@ const validPosts = posts.filter(post => post.slug && post.slug.trim() !== '');
   </footer>
 </body>
 </html>
+
