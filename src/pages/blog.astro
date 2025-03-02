@@ -2,7 +2,7 @@
 import '../styles/globals.css';
 
 // Realiza el fetch para obtener los posts
-const response = await fetch('http://127.0.0.1:8000/api/posts');
+const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/posts`);
 const posts = await response.json();
 
 // Filtra solo los posts que tienen un slug válido

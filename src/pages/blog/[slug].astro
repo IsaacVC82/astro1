@@ -6,7 +6,7 @@ const { slug } = Astro.params;
 // Fetch dinámico para obtener el post según el slug
 let post = null;
 try {
-  const response = await fetch('https://bloglaravel-4.onrender.com/api/posts');
+  const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/posts`);
   if (!response.ok) {
     throw new Error('Error al obtener el post');
   }
@@ -18,7 +18,7 @@ try {
 // Función para obtener todas las rutas posibles (slugs) 
 export async function getStaticPaths() {
   try {
-    const response = await fetch('https://bloglaravel-4.onrender.com/api/posts');
+    const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/posts`);
     const posts = await response.json();
 
     return posts.map((post) => ({
